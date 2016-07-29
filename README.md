@@ -1,3 +1,2 @@
 # helloworld
-playground for learning to use git
-added this line
+This is my playground for learning Python and Git!
