@@ -1,10 +1,10 @@
-import math
+import math, random
 
 def fibonacci(x):
     return x if (x <= 1) else (fibonacci(x-1) + fibonacci(x-2))
 
 
-def gcd(x,y):
+def gcd(x, y):
     while y != 0:
         (x,y) = (y, x % y)
     return x
@@ -48,3 +48,22 @@ def lcm(*values):
             n += n0
         return n
     return 0
+
+def randomInteger(a, b):
+
+    if b < a:
+        a, b = b, a
+    range = b - a + 1
+    i, x = 1, 0
+
+    while i <= range:
+        coin = random.randint(0, 1)
+        print ("looping", i, range, x, coin)
+        
+        if coin:
+            x *= 2
+            x += 1
+        i *= 2
+
+    return (x + a)
+
