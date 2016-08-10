@@ -23,7 +23,7 @@ def insertion_sort(a):    #sorts array a
     return a
 
 
-def isPalindrome(x): #tests whether the input number is a palindrome
+def is_palindrome(x): #tests whether the input number is a palindrome
     a = str(x)
     for i in range(0, int(math.ceil(float(len(str(x)))/2))):
       if a[i] != a[-1-i]:
@@ -32,7 +32,7 @@ def isPalindrome(x): #tests whether the input number is a palindrome
         return True
 
 
-def isPal(x): #a shorter way of testing for palindromes
+def is_pal(x): #a shorter way of testing for palindromes
     if str(x) == str(x)[::-1]:
         return True
     else:
@@ -49,7 +49,7 @@ def lcm(*values):
         return n
     return 0
 
-def randomInteger(a, b):
+def random_integer(a, b):
 
     if b < a:
         a, b = b, a
