@@ -1,0 +1,48 @@
+---
+title: "29 April 2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+```{python}
+college_years = ['Freshman', 'Sophomore', 'Junior', 'Senior']
+print(list(enumerate(college_years, 2019)))
+
+
+class Solution:
+  def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+    return nums1 + nums2
+
+
+print(Solution().intersect(nums1 = [1,2,2,1], nums2 = [2,2]))
+print(Solution().intersect(nums1 = [4,9,5], nums2 = [9,4,9,8,4]))   
+        
+l1 = [1, 2, 3]
+l2 = [3, 4, 5]
+print(l1 and l2)
+
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
