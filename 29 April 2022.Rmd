@@ -1,48 +1,70 @@
 ---
-title: "29 April 2022"
+title: "29 April 2022 daily practice"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+
+
+
+LeetCode 118. Pascal's Triangle.
+```{python}
+from math import comb
+from typing import List
+
+class Solution:
+  def generate(self, numRows: int) -> List[List[int]]:
+    allRows = []
+    for i in range(numRows):
+      rowI = []
+      
+      for j in range(i + 1):
+        rowI.append(comb(i, j))
+      
+      allRows.append(rowI)
+  
+    return allRows
+
 ```
 
-## R Markdown
+Test cases:
+```{python}
+print(Solution().generate(numRows = 1))
+print(Solution().generate(numRows = 2))
+print(Solution().generate(numRows = 3))
+print(Solution().generate(numRows = 4))
+print(Solution().generate(numRows = 5))
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```
 
-```{r cars}
-summary(cars)
+
+LeetCode 119. Pascal's Triangle 2.
+```{python}
+from math import comb
+
+class Solution:
+  def getRow(self, rowIndex: int) -> List[int]:
+    thisRow = []
+    
+    for j in range(rowIndex + 1):
+        thisRow.append(comb(rowIndex, j))
+  
+    return thisRow
 ```
 
 ```{python}
-college_years = ['Freshman', 'Sophomore', 'Junior', 'Senior']
-print(list(enumerate(college_years, 2019)))
-
-
-class Solution:
-  def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-    return nums1 + nums2
-
-
-print(Solution().intersect(nums1 = [1,2,2,1], nums2 = [2,2]))
-print(Solution().intersect(nums1 = [4,9,5], nums2 = [9,4,9,8,4]))   
-        
-l1 = [1, 2, 3]
-l2 = [3, 4, 5]
-print(l1 and l2)
+print(Solution().getRow(rowIndex = 0))
+print(Solution().getRow(rowIndex = 1))
+print(Solution().getRow(rowIndex = 2))
+print(Solution().getRow(rowIndex = 3))
+print(Solution().getRow(rowIndex = 4))
 
 ```
 
 
-## Including Plots
+  LeetCode 556. Reshape the Matrix.
+```{python}
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
