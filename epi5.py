@@ -1,4 +1,8 @@
-def dutch_national_flag(a, index): #EPI 6.1
+## Solutions to some exercises from the Elements of Programming Interviews
+## (Aziz, Lee, and Prakash 2014)
+
+# Problem 6.1: Dutch National Flag
+def dutch_national_flag(a, index):
     length = len(a)
     print ("length: ", length)
     
