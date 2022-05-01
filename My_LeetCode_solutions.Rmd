@@ -110,25 +110,6 @@ print(Solution().isPalindrome(x = 1000021))
 ```
 
 
-??? Palindrom words.
-```{python}
-class Solution:
-  def isPalindrome(self, s: str) -> bool:
-
-    # Remove punctuation and force lowercase
-    s = re.sub(r'[^a-zA-Z0-9]', '', s).lower()
-
-    return s == s[::-1]
-
-    
-print(Solution().isPalindrome(s = "abba"))
-print(Solution().isPalindrome(s = "abcd"))
-print(Solution().isPalindrome(s = "abcdedcba"))
-print(Solution().isPalindrome(s = "A man, a plan, a canal: Panama"))
-print(Solution().isPalindrome(s = "race a car"))
-print(Solution().isPalindrome(s = " "))
-print(Solution().isPalindrome(s = "0P"))
-```
 
 
 LeetCode 12. Integer to Roman
@@ -189,6 +170,79 @@ LeetCode 13. Longest Common Prefix
 
 ```
 
+
+
+
+LeetCode 36: Valid Sudoku
+```{python}
+
+from typing import List
+
+class Solution:
+  def isValidSudoku(self, board: List[List[str]]) -> bool:
+    
+    # Convert board from chars to integers
+    for i in range(0, len(board)):
+      for j in range(0, len(board)):
+        if board[i][j] == '.':
+          board[i][j] = 0
+        else:
+          board[i][j] = int(board[i][j])
+    
+    # Check each row for digits in the range [1, 9] w/o repetition
+    for i in range(9):
+      
+      thisRow = board[i]
+      digits = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+      #print("Looking at row: ", i)
+      
+      for j in range(9):
+        
+        if thisRow[j] in digits:
+          digits.remove(thisRow[j])
+        elif thisRow[j] == 0:
+          pass
+        else:
+          return False
+    # Check each column for digits in the range [1,9] w/o repetition
+    
+    # Check each 3x3 sub-box for digits [1,9] w/o repetition
+    
+    
+    return True
+
+```
+
+```{python}
+
+board = [["5","3",".",".","7",".",".",".","."],
+["6",".",".","1","9","5",".",".","."],
+[".","9","8",".",".",".",".","6","."],
+["8",".",".",".","6",".",".",".","3"],
+["4",".",".","8",".","3",".",".","1"],
+["7",".",".",".","2",".",".",".","6"],
+[".","6",".",".",".",".","2","8","."],
+[".",".",".","4","1","9",".",".","5"],
+[".",".",".",".","8",".",".","7","9"]]
+
+print(Solution().isValidSudoku(board))
+
+
+
+board = [["8","3",".",".","7",".",".",".","."],
+["6",".",".","1","9","5",".",".","."],
+[".","9","8",".",".",".",".","6","."],
+["8",".",".",".","6",".",".",".","3"],
+["4",".",".","8",".","3",".",".","1"],
+["7",".",".",".","2",".",".",".","6"],
+[".","6",".",".",".",".","2","8","."],
+[".",".",".","4","1","9",".",".","5"],
+[".",".",".",".","8",".",".","7","9"]]
+
+print(Solution().isValidSudoku(board))
+
+
+```
 
 LeetCode 53. Maximum Subarray
 ```{python}
@@ -310,9 +364,24 @@ LeetCode 123. Best Time to Buy and Sell Stock III
 
 ```
 
-LeetCode 125. Valid Palindrome
+LeetCode125: Valid Palindrome
 ```{python}
+class Solution:
+  def isPalindrome(self, s: str) -> bool:
 
+    # Remove punctuation and force lowercase
+    s = re.sub(r'[^a-zA-Z0-9]', '', s).lower()
+
+    return s == s[::-1]
+
+    
+print(Solution().isPalindrome(s = "abba"))
+print(Solution().isPalindrome(s = "abcd"))
+print(Solution().isPalindrome(s = "abcdedcba"))
+print(Solution().isPalindrome(s = "A man, a plan, a canal: Panama"))
+print(Solution().isPalindrome(s = "race a car"))
+print(Solution().isPalindrome(s = " "))
+print(Solution().isPalindrome(s = "0P"))
 ```
 
 
