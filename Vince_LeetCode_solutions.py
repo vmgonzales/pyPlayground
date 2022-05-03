@@ -218,6 +218,79 @@ print(Solution().romanToInt(s = 'C'))
 print(Solution().romanToInt(s = 'MXCIV'))
 
 
+#%% Preliminaries: ListNode class
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+a = ListNode()
+b = ListNode()
+c = ListNode()
+
+a.val
+a.next
+
+a.val = 1
+a.next = b
+a.next
+
+b.next = c
+a = ListNode([1, 2, 3, 4])
+a.next
+
+
+#%% LeetCode 21: Merge Two Sorted Lists
+# Definition for singly-linked list.
+#class ListNode:
+#    def __init__(self, val=0, next=None):
+#        self.val = val
+#        self.next = next
+
+# This solutions works in Spyder, but not in LeetCode -- I blame the ListNode class.
+# class Solution:
+#     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+#         list1 += list2
+#         list1.sort()
+#         return list1
+
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        print(list1)
+        cur = ListNode()
+        while list1 or list2:
+            print(list1, list2, cur)
+            if list1.val <= list2.val:
+                cur.next = list1
+                list1 = list1.next
+            else:
+                cur.next = list2
+                list2 = list2.next
+            
+        return list1
+
+# Not my solution:
+# class Solution:
+#     def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:   
+#         dummy = temp = ListNode(0)
+#         while list1 != None and list2 != None: #1
+
+#             if list1.val < list2.val: #2
+#                 temp.next = list1 #3
+#                 list1 = list1.next #4
+#             else: 
+#                 temp.next = list2
+#                 list2 = list2.next
+#             temp = temp.next
+#         temp.next = list1 or list2  #5
+#         return dummy.next #6
+
+print(Solution().mergeTwoLists(list1 = [1,2,4], list2 = [1,3,4]))
+#print(Solution().mergeTwoLists(list1 = [], list2 = []))
+print(Solution().mergeTwoLists(list1 = [], list2 = [0]))
+
+
+
 #%% LeetCode 36: Valid Sudoku
 
 
@@ -373,6 +446,76 @@ print(Solution().maxSubArray(nums = [1]))
 print(Solution().maxSubArray(nums = [5,4,-1,7,8]))
 
 
+#%% LeetCode 74: Search a 2D Matrix
+
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        # Brute forece -- check every element
+        rows = len(matrix[0])
+        cols = len(matrix)
+        print(rows, cols)
+        for i in range(rows * cols):
+            if matrix[i//rows][i%rows] == target:
+                return True
+        return False
+
+print(Solution().searchMatrix(matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3))
+print(Solution().searchMatrix(matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13))
+
+
+#%% LeetCode 242: Valid Anagram
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        
+        # Brute forece, not very elegant
+        
+        for i in s:
+            if i in t:
+                # Note that magazine.replace alone won't work!
+                s = s.replace(i, '', 1)
+                t = t.replace(i, '', 1)
+            else:
+                return False
+        if s == '' and t == '':
+            return True
+        else:
+            return False
+
+print(Solution().isAnagram(s = "anagram", t = "nagaram"))
+print(Solution().isAnagram(s = "rat", t = "car"))
+print(Solution().isAnagram(s = "anagram", t = "margana"))
+
+
+#%% LeetCode 383: Ransom Notes
+
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        #ransomNote.sort()
+        #magazine.sort()
+        
+        # Use string replace!
+        for i in ransomNote:
+            if i in magazine:
+                # Note that magazine.replace alone won't work!
+                magazine = magazine.replace(i, '', 1)
+            else:
+                return False
+        return True
+        
+
+# This solution is really elegant:
+# class Solution:
+#     def canConstruct(self, ransomNote, magazine):
+#         for i in set(ransomNote):
+#             if magazine.count(i) < ransomNote.count(i):
+#                 return False
+#        return True
+        
+print(Solution().canConstruct(ransomNote = "a", magazine = "b"))
+print(Solution().canConstruct(ransomNote = "aa", magazine = "ab"))
+print(Solution().canConstruct(ransomNote = "aa", magazine = "aab"))
+
+
 #%% LeetCode 387: First Unique Character in a String
 class Solution:
     def firstUniqChar(self, s: str) -> int:
@@ -421,3 +564,27 @@ class Solution:
 print(Solution().matrixReshape(mat = [[1,2],[3,4]], r = 1, c = 4))
 print(Solution().matrixReshape(mat = [[1,2],[3,4]], r = 2, c = 4))
 #print(Solution().matrixReshape())
+
+
+#%% LeetCode 905: Sort Array by Parity
+class Solution:
+    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+        i = 0
+        j = len(nums) - 1
+        
+        # Move odd numbers to end
+        while i <= j:
+            if nums[i] % 2 == 1:
+                print(i, j)
+                temp = nums[i]
+                nums[i] = nums[j]
+                nums[j] = temp
+                j -= 1
+            else:
+                i += 1
+        
+        return nums
+
+print(Solution().sortArrayByParity(nums = [3,1,2,4]))
+print(Solution().sortArrayByParity(nums = [0]))
+print(Solution().sortArrayByParity(nums = [3,1,3,2,4,6,4]))
