@@ -34,6 +34,7 @@ class ListNode:
         return self.item_count
 
 # This solution works in Spyder, but not in the LeetCode console. Not sure why!
+# Object of type ListNode has no len()
 # class Solution:
 #     def addTwoNumbers(self, l1, l2) -> List[int]:
 #         l3 = []
@@ -56,31 +57,56 @@ class ListNode:
 #         return l3
 
 
-# This solution is not mine, but it works.
+
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        res = dummy = ListNode()
-        carry = 0
+        l3 = ListNode()
+        carryDigit = 0
         while l1 or l2:
-            v1, v2 = 0, 0
-            if l1: v1, l1 = l1.val, l1.next
-            if l2: v2, l2 = l2.val, l2.next
+            nextDigit = carryDigit
+            carryDigit = 0
             
-            val = carry + v1 + v2
-            res.next = ListNode(val%10)
-            res, carry = res.next, val//10
+            #print(l1, l2, l3)
+            if l1.val:
+                nextDigit += l1.val
+            if l2.val:
+                nextDigit += l2.val
+            if newDigit >= 10:
+                carryDigit += 1
+                nextDigit -= 10
+            l3.next = nextDigit
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+        if carryDigit > 0:
+            l3.append(1)
+        return l3
+
+
+# This solution is not mine, but it works.
+# class Solution:
+#     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+#         res = dummy = ListNode()
+#         carry = 0
+#         while l1 or l2:
+#             v1, v2 = 0, 0
+#             if l1: v1, l1 = l1.val, l1.next
+#             if l2: v2, l2 = l2.val, l2.next
             
-        if carry:
-            res.next = ListNode(carry)
+#             val = carry + v1 + v2
+#             res.next = ListNode(val%10)
+#             res, carry = res.next, val//10
             
-        return dummy.next
+#         if carry:
+#             res.next = ListNode(carry)
+            
+#         return dummy.next
     
 
-print(Solution().addTwoNumbers(l1 = [2,4,3], l2 = [5,6,4]))
+print(Solution().addTwoNumbers(l1 = ListNode([2,4,3]), l2 = ListNode([5,6,4]))) # --> [7,0,8]
 print("\n")
-print(Solution().addTwoNumbers(l1 = [0], l2 = [0]))
+print(Solution().addTwoNumbers(l1 = [0], l2 = [0])) # --> [0]
 print("\n")
-print(Solution().addTwoNumbers(l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]))
+print(Solution().addTwoNumbers(l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9])) # --> [8,9,9,9,0,0,1]
 
 
 #%% LeetCode 4: Median of Two Sorted Arrays
@@ -169,7 +195,97 @@ print(Solution().isPalindrome(x = 1000021))
 
 
 #%% LeetCode 12: Integer to Roman
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        
+        roman = ''
+        
+        while num !=0:
+            
+            while num // 1000 > 0:
+                roman += 'M'
+                num -= 1000
+            
+            if num >= 900:
+                roman += 'CM'
+                num -= 900
+            if num >= 500:
+                roman += 'D'
+                num -= 500
+            if num >= 400:
+                roman += 'CD'
+                num -= 400
+            while num // 100 > 0:
+                roman += 'C'
+                num -= 100
+            if num >= 90:
+                roman += 'XC'
+                num -= 90
+            if num >= 50:
+                roman += 'L'
+                num -= 50            
+            if num >= 40:
+                roman += 'XL'
+                num -= 40
+            while num // 10 > 0:
+                roman += 'X'
+                num -= 10
+            if num == 9:
+                roman += 'IX'
+                num -= 9
+            if num >= 5:
+                roman += 'V'
+                num -= 5
+            if num == 4:
+                roman += 'IV'
+                num -= 4
+            while num > 0:
+                roman += 'I'
+                num -=1
+        return roman    
 
+    # Attempt at a more elegant solution using a dictionary.
+    # def intToRoman(self, num: int) -> str:
+    #     intRoman = {
+    #         1000: 'M',
+    #         900: 'CM',
+    #         500: 'D',
+    #         400: 'CD',
+    #         100: 'C',
+    #         90: 'XC',
+    #         50: 'L',
+    #         40: 'XL',
+    #         10: 'X',
+    #         9: 'IX',
+    #         5: 'V',
+    #         4: 'IV',
+    #         1: 'I'
+    #         }
+                    
+    #     roman = ''
+    
+    # return roman
+
+
+print(Solution().intToRoman(1))
+print(Solution().intToRoman(3))
+print(Solution().intToRoman(4))
+print(Solution().intToRoman(5))
+print('\n')
+print(Solution().intToRoman(9))
+print(Solution().intToRoman(10))
+print(Solution().intToRoman(11))
+print('\n')
+print(Solution().intToRoman(49))
+print(Solution().intToRoman(50))
+print(Solution().intToRoman(55))
+print('\n')
+print(Solution().intToRoman(89))
+print(Solution().intToRoman(90))
+print(Solution().intToRoman(91))
+print(Solution().intToRoman(98))
+print(Solution().intToRoman(99))
+print(Solution().intToRoman(100))
 
 #%% LeetCode 13: Roman to Integer
 
@@ -218,26 +334,30 @@ print(Solution().romanToInt(s = 'C'))
 print(Solution().romanToInt(s = 'MXCIV'))
 
 
-#%% Preliminaries: ListNode class
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+#%% LeetCode 14: Longest Common Prefix
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        common = ""
+        numStrings = len(strs)
+        shortest = min(strs, key = len)
+        
+        if numStrings == 1:
+            return strs[0]
+        
+        for letter in range(len(shortest)):
+            for i in range(1, numStrings):
+                if strs[i][letter] == strs[0][letter]:
+                    if i == (numStrings - 1):
+                        common += strs[0][letter]
+                else: return common
+        return common
+        
 
-a = ListNode()
-b = ListNode()
-c = ListNode()
 
-a.val
-a.next
-
-a.val = 1
-a.next = b
-a.next
-
-b.next = c
-a = ListNode([1, 2, 3, 4])
-a.next
+print(Solution().longestCommonPrefix(strs = ['a']))
+#print(Solution().longestCommonPrefix(strs = ["flower","flow","flight"]))
+#print(Solution().longestCommonPrefix(strs = ["dog","racecar","car"]))
+#print(Solution().longestCommonPrefix(strs = ['rateres', 'raterasdgasf', 'rateieiei']))
 
 
 #%% LeetCode 21: Merge Two Sorted Lists
@@ -256,18 +376,24 @@ a.next
 
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        print(list1)
-        cur = ListNode()
+        #print(list1)
+        dummy = pointer = ListNode()
         while list1 or list2:
-            print(list1, list2, cur)
-            if list1.val <= list2.val:
-                cur.next = list1
+            #print(list1, list2, cur)
+            if list1 and list2:
+                if list1.val <= list2.val:
+                    pointer.next = list1
+                    list1 = list1.next
+                else:
+                    pointer.next = list2
+                    list2 = list2.next
+            elif list1:
+                pointer.next = list1
                 list1 = list1.next
-            else:
-                cur.next = list2
+            elif list2:
+                pointer.next = list2
                 list2 = list2.next
-            
-        return list1
+        return dummy.next
 
 # Not my solution:
 # class Solution:
@@ -285,10 +411,10 @@ class Solution:
 #         temp.next = list1 or list2  #5
 #         return dummy.next #6
 
-print(Solution().mergeTwoLists(list1 = [1,2,4], list2 = [1,3,4]))
+# Test cases -- must define list1 and list2 as above!
+(Solution().mergeTwoLists(list1, list2)).printNode()
 #print(Solution().mergeTwoLists(list1 = [], list2 = []))
-print(Solution().mergeTwoLists(list1 = [], list2 = [0]))
-
+#print(Solution().mergeTwoLists(list1 = [], list2 = [0]))
 
 
 #%% LeetCode 36: Valid Sudoku
@@ -462,6 +588,156 @@ class Solution:
 print(Solution().searchMatrix(matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3))
 print(Solution().searchMatrix(matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13))
 
+#%% LeetCode 88: Merge Sorted Array
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+                
+
+#%% LeetCode 118: Pascal's Triangle
+from math import comb
+from typing import List
+
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        allRows = []
+        for i in range(numRows):
+            rowI = []
+            
+            for j in range(i + 1):
+                rowI.append(comb(i, j))
+            
+            allRows.append(rowI)
+    
+        return allRows
+
+# Test cases:
+
+print(Solution().generate(numRows = 1))
+print(Solution().generate(numRows = 2))
+print(Solution().generate(numRows = 3))
+print(Solution().generate(numRows = 4))
+print(Solution().generate(numRows = 5))
+
+
+#%% LeetCode 119: Pascal's Triangle 2
+
+from math import comb
+
+class Solution:
+    def getRow(self, rowIndex: int) -> List[int]:
+        thisRow = []
+        
+        for j in range(rowIndex + 1):
+                thisRow.append(comb(rowIndex, j))
+    
+        return thisRow
+
+# Test cases
+
+print(Solution().getRow(rowIndex = 0))
+print(Solution().getRow(rowIndex = 1))
+print(Solution().getRow(rowIndex = 2))
+print(Solution().getRow(rowIndex = 3))
+print(Solution().getRow(rowIndex = 4))
+
+
+#%% LeetCode 121: Best Time to Buy and Sell Stock
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxProfit = 0
+        left = 0
+        right = 1
+             
+        while right < len(prices):
+            if prices[left] < prices[right]:
+                currentProfit = prices[right] - prices[left]
+                maxProfit = max(maxProfit, currentProfit)
+            else:
+                left = right
+            right += 1
+                
+        return maxProfit
+
+# Test Cases
+
+print(Solution().maxProfit(prices = [7,1,5,3,6,4]))
+print(Solution().maxProfit(prices = [7,6,4,3,1]))
+
+
+#%% LeetCode 122: Best Time to Buy and Sell Stock II
+
+
+#%% LeetCode 123: Best Time to Buy and Sell Stock III
+
+
+#%% LeetCode 125: Valid Palindrome
+
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+
+        # Remove punctuation and force lowercase
+        s = re.sub(r'[^a-zA-Z0-9]', '', s).lower()
+
+        return s == s[::-1]
+
+print(Solution().isPalindrome(s = "abba"))
+print(Solution().isPalindrome(s = "abcd"))
+print(Solution().isPalindrome(s = "abcdedcba"))
+print(Solution().isPalindrome(s = "A man, a plan, a canal: Panama"))
+print(Solution().isPalindrome(s = "race a car"))
+print(Solution().isPalindrome(s = " "))
+print(Solution().isPalindrome(s = "0P"))
+```
+
+
+
+
+#%% LeetCode 141: Linked List Cycle
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution:
+	def hasCycle(self, head: Optional[ListNode]) -> bool:
+
+		slow = head
+		fast = head
+
+		while fast != None and fast.next != None:
+
+			slow = slow.next
+			fast = fast.next.next
+
+			if slow == fast:
+				return True
+
+		return False
+    
+print(Solution().hasCycle(head = [3,2,0,-4], pos = 1))
+print(Solution().hasCycle(head = [1,2], pos = 0))
+print(Solution().hasCycle(head = [1], pos = -1))
+
+
+#%% LeetCode 147: Insertion Sort List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+      while head.next != None:
+          print(head.val, head.next)
+          head.
+        
+# Test cases -- difficult w/r/t ListNode class!
+#print(Solution().insertionSortList())  
+
 
 #%% LeetCode 242: Valid Anagram
 class Solution:
@@ -564,6 +840,37 @@ class Solution:
 print(Solution().matrixReshape(mat = [[1,2],[3,4]], r = 1, c = 4))
 print(Solution().matrixReshape(mat = [[1,2],[3,4]], r = 2, c = 4))
 #print(Solution().matrixReshape())
+
+
+#%% LeetCode 581: Shortest Unsorted Continuous Subarray
+from operator import sub
+class Solution:
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+        # Brute force
+        if len(nums) == 0: return 0
+        if len(nums) == 1: return 0
+    
+        copyNums = list(nums)
+        copyNums.sort()
+        
+        difference = list(map(sub, nums, copyNums))
+        #print('Difference: ', difference)
+
+        while difference[0] == 0:
+            difference.pop(0)
+            if len(difference) == 0: return 0
+            
+        while difference[-1] == 0:
+            difference.pop(-1)
+            if len(difference) == 0: return 0
+        
+        return len(difference)
+        
+        
+print(Solution().findUnsortedSubarray(nums = [2,6,4,8,10,9,15]))
+print(Solution().findUnsortedSubarray(nums = [1,2,3,4]))
+print(Solution().findUnsortedSubarray(nums = [1]))
+#print(Solution().findUnsortedSubarray())
 
 
 #%% LeetCode 905: Sort Array by Parity
