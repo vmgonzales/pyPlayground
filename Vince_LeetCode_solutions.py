@@ -895,3 +895,23 @@ class Solution:
 print(Solution().sortArrayByParity(nums = [3,1,2,4]))
 print(Solution().sortArrayByParity(nums = [0]))
 print(Solution().sortArrayByParity(nums = [3,1,3,2,4,6,4]))
+
+
+#%% LeetCode 1679: Max Number of K-Sum Pairs
+class Solution:
+    def maxOperations(self, nums: List[int], k: int) -> int:
+        pairs = 0
+        keepGoing = 1
+        while(keepGoing == 1):
+            for i in range (0, len(nums)):
+                for j in range(i+1, len(nums)):
+                    # print('[', i, j,']', nums[i], nums[j], '=', (nums[i] + nums[j]), '?=', target)
+                    if nums[i] + nums[j] == k:
+                        nums.remove(nums[i])
+                        nums.remove(nums[j])
+            keepGoing = 0
+        return None
+
+print(Solution().maxOperations(nums = [1,2,3,4], k = 5)) # --> 2
+print(Solution().maxOperations(nums = [3,1,3,4,3], k = 6)) --> 1
+#print(Solution().maxOperations())

@@ -41,12 +41,53 @@ class ListNode:
             i += 1
         print("All done!\n\n")
 
-class Solution:    
-    def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-      while head.next != None:
-          print(head.val, head.next)
-          head.val = head.next.val
-          head.next = head.next.next
+# class Solution:    
+#     def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+#         if head.next = Null:
+#             return head
+                
+#         last = ListNode()
+#         current = ListNode()
+#         last.val = head.next.val
+#         last.next = head.next.next
+        
+#         i = 0
+#         while last.val != None and i < 20:
+#             current.val = head.val
+#             current.next = head.next
+#             if last.val < current.val:
+#                 print('Value: ', copy.val, 'Next: ', copy.next.val)
+#             else:
+#                 print('Value: ', copy.val, 'Next: None')
+#             # copy.val = copy.next.val if copy.next else None
+#             if copy.next:
+#                 copy.val = copy.next.val
+#             else:
+#                 copy = None
+            
+#             if copy!= None:
+#                 if copy.val != None:
+#                     copy.next = copy.next.next if copy.next.next else None
+#             i += 1
+#         print("All done!\n\n")
+#         return head
+
+class Solution:        
+    def insertionSortList(self, head):
+        if head is None:
+            return None
+        helper = ListNode(-1000)
+        pre, curr = helper, head
+        while curr is not None:
+            next_step = curr.next
+            while pre.next and pre.next.val < curr.val:
+                pre = pre.next
+            curr.next = pre.next
+            pre.next = curr
+            pre = helper
+            curr = next_step
+        return helper.next
 
 a = ListNode()
 b = ListNode()
@@ -111,3 +152,4 @@ pointer.val = None
 pointer.next = n1
 
 pointer.printNode()
+Solution().insertionSortList(head = n1).printNode()
