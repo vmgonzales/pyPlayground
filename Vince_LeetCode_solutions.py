@@ -360,6 +360,43 @@ print(Solution().longestCommonPrefix(strs = ['a']))
 #print(Solution().longestCommonPrefix(strs = ['rateres', 'raterasdgasf', 'rateieiei']))
 
 
+#%% LeetCode 20: Valid Parenthesis
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        leftBracketSet = {'(', '{', '['}
+        rightBracketSet = {')', '}', ']'}
+        bracketDict = {')': '(', '}': '{', ']': '['}
+        stack = ''
+        for i in s:
+            #print('Looking at: ', i, '\n')
+            if i in leftBracketSet:
+                #print("Add to stack!")
+                stack += i
+            elif i in rightBracketSet and len(stack) == 0:
+                return False
+            elif i in rightBracketSet and len(stack) > 0:
+                #print('Remove?', i, stack[-1])
+                if bracketDict[i] == stack[-1]:
+                    stack = stack[:-1]
+                    #print('Remove: ', i, '\n')
+                else:
+                    #print('Not in stack!')
+                    return False  
+            else:
+                pass
+       
+        #print("Last part!")
+        if stack == '':
+            return True
+        else:
+            return False
+
+
+
 #%% LeetCode 21: Merge Two Sorted Lists
 # Definition for singly-linked list.
 #class ListNode:
@@ -690,10 +727,33 @@ print(Solution().isPalindrome(s = "A man, a plan, a canal: Panama"))
 print(Solution().isPalindrome(s = "race a car"))
 print(Solution().isPalindrome(s = " "))
 print(Solution().isPalindrome(s = "0P"))
-```
 
 
+#%% LeetCode 136: Single Number
 
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        
+        nums.sort()
+        i = 0
+        for i in range(len(nums)//2 + 1):
+            if nums[(2 * i) % len(nums)] == nums[(2 * i + 1) % len(nums)]:
+                pass
+            elif nums[(2 * i + 1) % len(nums)] == nums[(2 * i + 2) % len(nums)]:
+                return nums[2 * i]
+            else:
+                return nums[2 * i + 1]
+
+print(Solution().singleNumber(nums = [2,2,1]))
+print(Solution().singleNumber(nums = [4,1,2,1,2]))
+print(Solution().singleNumber(nums = [1]))
+print(Solution().singleNumber(nums = [1, 2, 2, 3, 3, 4, 4]))
+print(Solution().singleNumber(nums = [2, 1, 2, 3, 3, 4, 4]))
+print(Solution().singleNumber(nums = [2, 2, 3, 3, 4, 1, 4]))
+print(Solution().singleNumber(nums = [2, 2, 3, 3, 4, 4, 1]))
+      
 
 #%% LeetCode 141: Linked List Cycle
 # Definition for singly-linked list.
