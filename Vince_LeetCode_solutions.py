@@ -414,39 +414,25 @@ class Solution(object):
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         #print(list1)
-        dummy = pointer = ListNode()
-        while list1 or list2:
-            #print(list1, list2, cur)
-            if list1 and list2:
-                if list1.val <= list2.val:
-                    pointer.next = list1
-                    list1 = list1.next
-                else:
-                    pointer.next = list2
-                    list2 = list2.next
-            elif list1:
-                pointer.next = list1
+        dummy = ListNode()
+        tail = dummy
+        while list1 and list2:
+            #print(list1, list2, dummy, tail)
+            if list1.val <= list2.val:
+                tail.next = list1
                 list1 = list1.next
-            elif list2:
-                pointer.next = list2
+            else:
+                tail.next = list2
                 list2 = list2.next
+            tail = tail.next
+            
+        if list 1:
+            tail.next = list1
+        elif list2:
+            tail.next = list2
+            
         return dummy.next
 
-# Not my solution:
-# class Solution:
-#     def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:   
-#         dummy = temp = ListNode(0)
-#         while list1 != None and list2 != None: #1
-
-#             if list1.val < list2.val: #2
-#                 temp.next = list1 #3
-#                 list1 = list1.next #4
-#             else: 
-#                 temp.next = list2
-#                 list2 = list2.next
-#             temp = temp.next
-#         temp.next = list1 or list2  #5
-#         return dummy.next #6
 
 # Test cases -- must define list1 and list2 as above!
 (Solution().mergeTwoLists(list1, list2)).printNode()
@@ -793,10 +779,85 @@ class Solution:
     def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
       while head.next != None:
           print(head.val, head.next)
-          head.
+          # head.
         
 # Test cases -- difficult w/r/t ListNode class!
 #print(Solution().insertionSortList())  
+
+
+#%% LeetCode 206: Reverse Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+# Iterative solution
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        curr = head
+        prev = None
+        
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+            
+        return prev
+
+# Recursive solution
+# class Solution:
+#     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+#         if not head:
+#             return None
+        
+#         newHead = head
+#         if head.next:
+#             newHead = self.reverseList(head.next)
+#             head.next.next = head
+#         head.next = None
+#         return newHead
+
+#%% LeetCode 237: Delete Node in a Linked List
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        # for i in Node:
+        #     if i.val == target:
+        #         i.val = next.val
+        #         i.next = next.next
+        #     else:
+        #         pass
+
+        node.val = node.next.val
+        node.next = node.next.next
+
+a = ListNode(x = 4)
+b = ListNode(x = 5)
+c = ListNode(x = 1)
+d = ListNode(x = 9)
+
+d.val = 9
+d.next = None
+c.val = 1
+c.next = d
+b.val = 5
+b.next = c
+a.val = 4
+a.next = b
+
+
+print(a.deleteNode(b))
 
 
 #%% LeetCode 242: Valid Anagram
@@ -880,6 +941,33 @@ class Solution:
 print(Solution().firstUniqChar(s = "leetcode"))
 print(Solution().firstUniqChar(s = "loveleetcode"))
 print(Solution().firstUniqChar(s = "aabb"))
+
+
+#%% LeetCode 456: 132 Pattern
+class Solution:
+    def find132pattern(self, nums: List[int]) -> bool:
+        
+        if len(nums) <= 2:
+            return False
+        
+        for i in range(1, len(nums)):
+            # Check below
+                for j in range(0, i):
+                    if nums[j] < nums[i]:
+                        lowVal = nums[j]
+                    else: return False
+               
+            # Check above
+                for j in range(i+1, len(nums)):
+                    if nums[j] < nums[i] and nums[j] > lowVal:
+                        pass
+                    else: return False
+        return True
+
+
+print(Solution().find132pattern(nums = [1,2,3,4])) # False
+print(Solution().find132pattern(nums = [3,1,4,2])) # True
+print(Solution().find132pattern(nums = [-1,3,2,0])) # True
 
 
 #%% LeetCode 566: Reshape The Matrix
