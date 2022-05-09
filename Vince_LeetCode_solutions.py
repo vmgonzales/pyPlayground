@@ -30,8 +30,8 @@ class ListNode:
         self.val = val
         self.next = next
         
-    def __len__(self):
-        return self.item_count
+    # def __len__(self):
+    #     return self.item_count
 
 # This solution works in Spyder, but not in the LeetCode console. Not sure why!
 # Object of type ListNode has no len()
@@ -60,53 +60,42 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        l3 = ListNode()
+        dummy = ListNode()
         carryDigit = 0
         while l1 or l2:
             nextDigit = carryDigit
             carryDigit = 0
+            v1, v2 = 0, 0
             
-            #print(l1, l2, l3)
-            if l1.val:
-                nextDigit += l1.val
-            if l2.val:
-                nextDigit += l2.val
-            if newDigit >= 10:
+            if l1:
+                v1 = l1.val
+                nextDigit += v1
+                l1 = l1.next
+                
+            if l2:
+                v2 = l2.val
+                nextDigit += v2
+                l2 = l2.next
+                
+            if nextDigit >= 10:
                 carryDigit += 1
                 nextDigit -= 10
-            l3.next = nextDigit
-            l1 = l1.next if l1 else None
-            l2 = l2.next if l2 else None
-        if carryDigit > 0:
-            l3.append(1)
-        return l3
+            
+            res.next = ListNode(nextDigit)
+            res = res.next
+        
+        if carryDigit == 1:
+            res.next = ListNode(1)
+            res = res.next
+                
+        return dummy.next
 
 
-# This solution is not mine, but it works.
-# class Solution:
-#     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-#         res = dummy = ListNode()
-#         carry = 0
-#         while l1 or l2:
-#             v1, v2 = 0, 0
-#             if l1: v1, l1 = l1.val, l1.next
-#             if l2: v2, l2 = l2.val, l2.next
-            
-#             val = carry + v1 + v2
-#             res.next = ListNode(val%10)
-#             res, carry = res.next, val//10
-            
-#         if carry:
-#             res.next = ListNode(carry)
-            
-#         return dummy.next
-    
-
-print(Solution().addTwoNumbers(l1 = ListNode([2,4,3]), l2 = ListNode([5,6,4]))) # --> [7,0,8]
-print("\n")
-print(Solution().addTwoNumbers(l1 = [0], l2 = [0])) # --> [0]
-print("\n")
-print(Solution().addTwoNumbers(l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9])) # --> [8,9,9,9,0,0,1]
+# print(Solution().addTwoNumbers(l1 = ListNode([2,4,3]), l2 = ListNode([5,6,4]))) # --> [7,0,8]
+# print("\n")
+# print(Solution().addTwoNumbers(l1 = [0], l2 = [0])) # --> [0]
+# print("\n")
+# print(Solution().addTwoNumbers(l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9])) # --> [8,9,9,9,0,0,1]
 
 
 #%% LeetCode 4: Median of Two Sorted Arrays
@@ -360,6 +349,32 @@ print(Solution().longestCommonPrefix(strs = ['a']))
 #print(Solution().longestCommonPrefix(strs = ['rateres', 'raterasdgasf', 'rateieiei']))
 
 
+#%% LeetCode 17: Letter Combinations of a Phone Number
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        
+        if len(digits) == 0: return []
+        
+        wordList = []
+        dict = {2: ['a', 'b', 'c'],
+                3: ['d', 'e', 'f'],
+                4: ['g', 'h', 'i'],
+                5: ['j', 'k', 'l'],
+                6: ['m', 'n', 'o'],
+                7: ['p', 'q', 'r', 's'],
+                8: ['t', 'u', 'v'],
+                9: ['w', 'x', 'y', 'z']}
+        
+        # I'm thinking this should be recursive.
+        for i in range (len(digits)):
+            for letter in dict[digits[i]]:
+                wordList += (letter + letterCombinations ())
+        
+        return wordList
+            
+            
+
+
 #%% LeetCode 20: Valid Parenthesis
 class Solution(object):
     def isValid(self, s):
@@ -611,6 +626,26 @@ class Solution:
 print(Solution().searchMatrix(matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3))
 print(Solution().searchMatrix(matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13))
 
+
+#%% LeetCode 83: Remove Duplicates from Sorted List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        pointer = head
+        
+        while pointer:
+            if pointer.next and pointer.val == pointer.next.val:
+                pointer.next = pointer.next.next
+            else:
+                pointer = pointer.next
+        
+        return head
+
+
 #%% LeetCode 88: Merge Sorted Array
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
@@ -763,10 +798,11 @@ class Solution:
 				return True
 
 		return False
-    
-print(Solution().hasCycle(head = [3,2,0,-4], pos = 1))
-print(Solution().hasCycle(head = [1,2], pos = 0))
-print(Solution().hasCycle(head = [1], pos = -1))
+
+# I'm not sure how to implement test cases using an IDE and not LeetCode.    
+# print(Solution().hasCycle(head = [3,2,0,-4], pos = 1))
+# print(Solution().hasCycle(head = [1,2], pos = 0))
+# print(Solution().hasCycle(head = [1], pos = -1))
 
 
 #%% LeetCode 147: Insertion Sort List
@@ -783,6 +819,32 @@ class Solution:
         
 # Test cases -- difficult w/r/t ListNode class!
 #print(Solution().insertionSortList())  
+
+
+#%% LeetCode 203: Remove Linked List Elements
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+
+        dummy = ListNode(-1)
+        dummy.next = head
+        pointer = dummy
+        
+        while pointer.next:
+            if pointer.next.val == val:
+                if pointer.next.next:
+                    pointer.next = pointer.next.next
+                else:
+                    pointer.next = None
+            else:
+                pointer = pointer.next
+        
+        return dummy.next
 
 
 #%% LeetCode 206: Reverse Linked List
@@ -949,20 +1011,20 @@ class Solution:
         
         if len(nums) <= 2:
             return False
+        lowVal = nums[0]
         
         for i in range(1, len(nums)):
-            # Check below
-                for j in range(0, i):
-                    if nums[j] < nums[i]:
-                        lowVal = nums[j]
-                    else: return False
-               
+            
+            # Identify LowVal below
+            if nums[i - 1] < lowVal:
+                lowVal = nums[i - 1]
+                        
             # Check above
-                for j in range(i+1, len(nums)):
-                    if nums[j] < nums[i] and nums[j] > lowVal:
-                        pass
-                    else: return False
-        return True
+            for j in range(i+1, len(nums)):
+                if nums[j] < nums[i] and nums[j] > lowVal:
+                    return True
+        # print("Found no 132s! Lowval: ", lowVal)
+        return False
 
 
 print(Solution().find132pattern(nums = [1,2,3,4])) # False
