@@ -349,6 +349,56 @@ print(Solution().longestCommonPrefix(strs = ['a']))
 #print(Solution().longestCommonPrefix(strs = ['rateres', 'raterasdgasf', 'rateieiei']))
 
 
+#%% LeetCode 15: 3Sum
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        pos, neg, zero = [], [], []
+        ans = set()
+        
+        # 1 Split list into pos, neg, and zero
+        for i in nums:
+            if i > 0:
+                pos.append(i)
+            elif i < 0:
+                neg.append(i)
+            else:
+                zero.append(0)
+        
+        # 2 Make a set for O(1) lookup time
+        posSet = set(pos)
+        negSet = set(neg)
+        
+        # 3 If nums has three 0s, add [0,0,0] to results
+        if len(zero) >= 3:
+            ans.add([0, 0, 0])
+        
+        # 4 If nums has one 0, check for corresponding pairs
+        if len(zero) == 1:
+            for i in posSet:
+                if -1 * i in negSet:
+                    ans.add((-1 * i, 0, i))
+        
+        # 5 For all pairs of negative numbers, check for their complement
+        for i in range(len(neg)):
+            for j in range (i+1, len(neg)):
+                target = -1 * (neg[i] + neg[j])
+                if target in posSet:
+                    ans.add(tuple(sorted([neg[i], neg[j], target])))
+        
+        # 6 for all pairs of positive numbers, check for their complement
+        for i in range(len(pos)):
+            for j in range (i+1, len(pos)):
+                target = -1 * (pos[i] + pos[j])
+                if target in negSet:
+                    ans.add(tuple(sorted([pos[i], pos[j], target])))
+        return ans
+
+print(Solution().threeSum(nums = [-1,0,1,2,-1,-4]))
+print(Solution().threeSum(nums = []))
+print(Solution().threeSum(nums = [0]))
+
+
+
 #%% LeetCode 17: Letter Combinations of a Phone Number
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
@@ -652,7 +702,31 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-                
+        
+
+#%% LeetCode 94: Binary Tree Inorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root: return []
+        
+        ans = []
+        if root.left:
+            ans += self.inorderTraversal(root.left)
+        # Carefull here... root.val can be 0, which would mean root.val = False
+        if root.val != None:
+            ans += [root.val]
+        if root.right:
+            ans += self.inorderTraversal(root.right)
+        return ans
+    
+
+        
 
 #%% LeetCode 118: Pascal's Triangle
 from math import comb
@@ -805,6 +879,53 @@ class Solution:
 # print(Solution().hasCycle(head = [1], pos = -1))
 
 
+#%% LeetCode 144: Binary Tree Preorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root: return []
+        
+        ans = []
+        # Carefull here... root.val can be 0, which would mean root.val = False
+        if root.val != None:
+            ans += [root.val]
+        if root.left:
+            ans += self.preorderTraversal(root.left)
+        if root.right:
+            ans += self.preorderTraversal(root.right)
+        return ans
+    
+
+
+
+#%% LeetCode 145: Binary Tree Postorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root: return []
+        
+        ans = []
+        if root.left:
+            ans += self.postorderTraversal(root.left)
+        if root.right:
+            ans += self.postorderTraversal(root.right)
+        # Carefull here... root.val can be 0, which would mean root.val = False
+        if root.val != None:
+            ans += [root.val]
+        return ans
+    
+
+
 #%% LeetCode 147: Insertion Sort List
 # Definition for singly-linked list.
 # class ListNode:
@@ -880,6 +1001,83 @@ class Solution:
 #             head.next.next = head
 #         head.next = None
 #         return newHead
+
+
+#%% LeetCode 232: Implement Queue Using Stacks
+
+# My second successful. The only difference from the first is that I used
+# self.s1 instead of a copy s1. (Same for s2.) This reduced runtime by
+# More than 50%!!
+
+class MyQueue:
+
+    def __init__(self):
+        self.s1 = []
+        self.s2 = []
+
+    def push(self, x: int) -> None:
+        #s1, s2 = self.s1, self.s2
+        while self.s1:
+            self.s2.append(self.s1.pop())
+        self.s1.append(x)
+        while self.s2:
+            self.s1.append(self.s2.pop())
+
+    def pop(self) -> int:
+        return self.s1.pop()
+
+    def peek(self) -> int:
+        return self.s1[-1]
+
+    def empty(self) -> bool:
+        if len(self.s1) == 0:
+            return True
+        else: return False
+        
+
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()
+
+# Below was my first attempt -- successful, but slow
+# class MyQueue:
+
+#     def __init__(self):
+#         self.s1 = []
+#         self.s2 = []
+
+#     def push(self, x: int) -> None:
+#         s1, s2 = self.s1, self.s2
+#         while s1:
+#             s2.append(s1.pop())
+#         s1.append(x)
+#         while s2:
+#             s1.append(s2.pop())
+
+#     def pop(self) -> int:
+#         return self.s1.pop()
+
+#     def peek(self) -> int:
+#         return self.s1[-1]
+
+#     def empty(self) -> bool:
+#         if len(self.s1) == 0:
+#             return True
+#         else: return False
+        
+
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()
+
 
 #%% LeetCode 237: Delete Node in a Linked List
 # Definition for singly-linked list.
@@ -1105,6 +1303,70 @@ class Solution:
 print(Solution().sortArrayByParity(nums = [3,1,2,4]))
 print(Solution().sortArrayByParity(nums = [0]))
 print(Solution().sortArrayByParity(nums = [3,1,3,2,4,6,4]))
+
+
+#%% LeetCode 1641:
+
+class Solution:
+    def countVowelStrings(self, n: int) -> int:
+        lookup = {0: 0, 1: 5, 2: 15, 3: 35, 4: 70, 5: 126, 6: 210, 7: 330,
+                  8: 495, 9: 715, 10: 1001, 11: 1365, 12: 1820, 13: 2380,
+                  14: 3060, 15: 3876, 16: 4845, 17: 5985, 18: 7315, 19: 8855,
+                  20: 10626, 21: 12650, 22: 14950, 23: 17550, 24: 20475,
+                  25: 23751, 26: 27405, 27: 31465, 28: 35960, 29: 40920,
+                  30: 46376, 31: 52360, 32: 58905, 33: 66045, 34: 73815,
+                  35: 82251, 36: 91390, 37: 101270, 38: 111930, 39: 123410,
+                  40: 135751, 41: 148995, 42: 163185, 43: 178365, 44: 194580,
+                  45: 211876, 46: 230300, 47: 249900, 48: 270725, 49: 292825,
+                  50: 316251}
+        return(lookup[n]) 
+
+
+
+# The method below makes the content of lookup, a dictionary with all the
+# answers. I pasted them in to the method above.
+# class Solution:
+#     def countVowelStrings(self, n: int) -> int:
+#         rows, cols = (51, 5)
+#         arr=[]
+#         lookup = {}
+#         arr.append([0,0,0,0,0])
+#         arr.append([1,1,1,1,1])
+#         for i in range(2, rows):
+#             col = []
+#             for j in range(cols):
+#                 newVal = 0
+#                 for k in range (j, cols):
+#                     newVal += arr[i-1][k]
+#                 col.append(newVal)
+#             arr.append(col)
+#         print(arr)
+        
+#         for i in range(0, rows):
+#             print(i, sum(arr[i]))
+#             lookup[i] = sum(arr[i])
+        
+#         print(lookup)
+        
+#         return(0)
+
+# Here's a more elegant solution that does the same thing (not mine)
+# class Solution:
+#     def countVowelStrings(self, n: int) -> int:
+#         l=[1,1,1,1,1]
+#         for i in range(1,n):
+#             for j in range(len(l)):
+#                 l[j]=sum(l[j:])
+#         return sum(l)
+        
+print(Solution().countVowelStrings(n = 0))
+print(Solution().countVowelStrings(n = 1))
+print(Solution().countVowelStrings(n = 2))
+print(Solution().countVowelStrings(n = 3))
+print(Solution().countVowelStrings(n = 4))
+print(Solution().countVowelStrings(n = 5))
+print(Solution().countVowelStrings(n = 33)) #66045
+
 
 
 #%% LeetCode 1679: Max Number of K-Sum Pairs
