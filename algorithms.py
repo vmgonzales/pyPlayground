@@ -1,6 +1,20 @@
-## Scratchpad for practicing algorithms
+# -*- coding: utf-8 -*-
+'''
+Algorithms Notebook
+===================
+
+Big Idea:
 
 
+Topics Covered
+==============
+
+* 
+
+Created on Wed May 11 12:48:30 2022
+
+@author: vmgon
+'''
 
 import mylib
 

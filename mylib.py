@@ -1,4 +1,21 @@
-## This is a library that I created of algorithms methods.
+# -*- coding: utf-8 -*-
+'''
+My Library of Math Functions
+================
+
+Big Idea: This is a library that I created of algorithms methods.
+
+
+Topics Covered
+==============
+
+* 
+
+Created on Wed May 11 2022
+
+@author: vmgon
+'''
+
 
 import math, random
 
