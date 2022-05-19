@@ -641,30 +641,6 @@ class Solution:
         """
         
 
-#%% LeetCode 94: Binary Tree Inorder Traversal
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        if not root: return []
-        
-        ans = []
-        if root.left:
-            ans += self.inorderTraversal(root.left)
-        # Carefull here... root.val can be 0, which would mean root.val = False
-        if root.val != None:
-            ans += [root.val]
-        if root.right:
-            ans += self.inorderTraversal(root.right)
-        return ans
-    
-
-        
-
 #%% LeetCode 118: Pascal's Triangle
 from math import comb
 from typing import List
@@ -814,53 +790,6 @@ class Solution:
 # print(Solution().hasCycle(head = [3,2,0,-4], pos = 1))
 # print(Solution().hasCycle(head = [1,2], pos = 0))
 # print(Solution().hasCycle(head = [1], pos = -1))
-
-
-#%% LeetCode 144: Binary Tree Preorder Traversal
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        if not root: return []
-        
-        ans = []
-        # Carefull here... root.val can be 0, which would mean root.val = False
-        if root.val != None:
-            ans += [root.val]
-        if root.left:
-            ans += self.preorderTraversal(root.left)
-        if root.right:
-            ans += self.preorderTraversal(root.right)
-        return ans
-    
-
-
-
-#%% LeetCode 145: Binary Tree Postorder Traversal
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        if not root: return []
-        
-        ans = []
-        if root.left:
-            ans += self.postorderTraversal(root.left)
-        if root.right:
-            ans += self.postorderTraversal(root.right)
-        # Carefull here... root.val can be 0, which would mean root.val = False
-        if root.val != None:
-            ans += [root.val]
-        return ans
-    
 
 
 #%% LeetCode 147: Insertion Sort List
