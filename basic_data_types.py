@@ -21,6 +21,17 @@ Created on Wed May 11 12:48:30 2022
 from typing import List
 from typing import Optional
 
+#%% Type casting
+# Type casting is converting from one type to another
+
+# Check the type using type()
+
+# Convert to string
+str(9.45)
+
+
+
+
 #%% LeetCode 1523: Count Odd Numbers in an Interval Range
 class Solution:
     def countOdds(self, low: int, high: int) -> int:
@@ -157,3 +168,20 @@ def dutch_national_flag(a, index):
 
 #test_array = [5, 6, 5, 4, 4, 3, 2, 1, 4, 5, 2]
 #print (dutch_national_flag(test_array, 6))
+
+
+#%% LeetCode 1356: Sort Integers by the Number of 1 Bits
+class Solution:
+    def sortByBits(self, arr: List[int]) -> List[int]:
+        ones = [0] * len(arr)
+        for i in range(len(arr)):
+            copy = arr[i]
+            ones[i] = 0
+            while copy:
+                ones[i] += copy % 2
+                copy = copy // 2
+        
+        #I don't totally understand the zip function
+        return([x for _, x in sorted(zip(ones, arr))])
+
+print(Solution().sortByBits(arr=[0,1,2,3,4,5,6,7,8]))
